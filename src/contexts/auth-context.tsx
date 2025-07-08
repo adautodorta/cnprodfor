@@ -7,6 +7,7 @@ type Session = {
     name: string;
     email: string;
     avatar?: string;
+    role: string;
   };
 } | null;
 

@@ -41,8 +41,8 @@ const editSchema = z.object({
 type EditFormValues = z.infer<typeof editSchema>;
 
 export function AccountComponent({
-  account, loading
-}: { account: { name: string, email: string } | null, loading: boolean }) {
+  account
+}: { account: { name: string, email: string, initialsName: string} | null}) {
   const { isMobile } = useSidebar();
   const { session, setSession } = useAuth();
   const router = useRouter();
@@ -109,28 +109,9 @@ export function AccountComponent({
     }
 
     const sessionData = await authClient.getSession();
-    setSession(sessionData?.data?.user ? { user: sessionData.data.user } : null);
+    // setSession(sessionData?.data?.user ? { user: sessionData.data.user } : null);
     setIsLoading(false);
     setOpenEdit(false);
-  }
-
-  function getInitials(name: string): string {
-    const parts = name?.trim().split(/\s+/) ?? [];
-    if (parts.length === 1) return parts[0]?.substring(0, 2).toUpperCase();
-    if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
-    return '';
-  }
-
-  if (loading) {
-    return (
-      <div className="flex items-center gap-2">
-        <div className="animate-pulse bg-gray-300 rounded-lg w-8 h-8" />
-        <div className="flex flex-col gap-1">
-          <div className="animate-pulse bg-gray-300 rounded w-24 h-4" />
-          <div className="animate-pulse bg-gray-200 rounded w-32 h-3" />
-        </div>
-      </div>
-    );
   }
 
   if (!account) return null;
@@ -145,7 +126,7 @@ export function AccountComponent({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                {getInitials(session?.user?.name as string)}
+                {account.initialsName}
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{account.name}</span>

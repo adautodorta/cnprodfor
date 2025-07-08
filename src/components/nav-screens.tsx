@@ -8,7 +8,9 @@ import {
   Frame,
   PieChart,
   MapIcon,
-  RocketIcon
+  RocketIcon,
+  Users2,
+  Home
 } from "lucide-react"
 
 import {
@@ -28,11 +30,19 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
-export function NavScreens() {
-  const { isMobile } = useSidebar()
+type NavScreensProps = {
+  role: string,
+}
+
+export function NavScreens({role}: NavScreensProps) {
+
+  const isAdmin = role === "ADMIN"
 
   const projects = [
-    { name: "Objetivos", url: "/app/goals", icon: RocketIcon },
+    { name: "Início", url: "/app", icon: Home },
+    ...(isAdmin
+      ? [{ name: "Voluntários", url: "/app/volunteers", icon: Users2 }]
+      : []),
   ]
 
   return (

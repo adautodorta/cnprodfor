@@ -67,23 +67,31 @@ const navMain = [
   },
 ]
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { session, loading } = useAuth();
+type AppSidebarProps = {
+  user: {
+    name: string
+    email: string
+    role: "USER" | "ADMIN"
+  } | null,
+  initialsName: string
+}
+
+export function AppSidebar({ user, initialsName }: AppSidebarProps) {
 
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon" >
       <SidebarHeader>
         <AccountComponent
-          account={session ? {
-            name: session.user.name,
-            email: session.user.email,
+          account={user ? {
+            name: user.name,
+            email: user.email,
+            initialsName: initialsName,
           } : null}
-          loading={loading}
         />
       </SidebarHeader>
       <SidebarContent>
         {/* <NavMain items={navMain} /> */}
-        <NavScreens />
+        <NavScreens role={user?.role ?? ""}/>
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
