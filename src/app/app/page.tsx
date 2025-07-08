@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { ButtonSignOut } from "./_components/button-signout"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers"

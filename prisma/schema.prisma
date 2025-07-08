@@ -79,3 +79,19 @@ model Verification {
 
   @@map("verification")
 }
+
+model P1Activity {
+  id String @id
+  name String
+  order Int
+
+  @@map("p1Activity")
+}
+
+model StageActivity {
+  id String @id
+  name String
+  order Int
+
+  @@map("stageActivity")
+}

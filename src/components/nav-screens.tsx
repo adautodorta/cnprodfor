@@ -1,33 +1,16 @@
 "use client"
 
 import {
-  Folder,
-  Forward,
-  MoreHorizontal,
-  Trash2,
-  Frame,
-  PieChart,
-  MapIcon,
-  RocketIcon,
   Users2,
-  Home
+  Home,
+  CheckCheck
 } from "lucide-react"
 
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from "@/components/ui/sidebar"
 
 type NavScreensProps = {
@@ -42,6 +25,9 @@ export function NavScreens({role}: NavScreensProps) {
     { name: "Início", url: "/app", icon: Home },
     ...(isAdmin
       ? [{ name: "Voluntários", url: "/app/volunteers", icon: Users2 }]
+      : []),
+    ...(isAdmin
+      ? [{ name: "Checklist", url: "/app/configure-checklist", icon: CheckCheck }]
       : []),
   ]
 
