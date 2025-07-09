@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const activities = await prisma.p1Activity.findMany({
+  const activities = await prisma.stageActivity.findMany({
     orderBy: { order: "asc" },
   });
   return NextResponse.json(activities);
@@ -16,8 +16,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "O nome da atividade é obrigatório." }, { status: 400 });
     }
 
-    const count = await prisma.p1Activity.count();
-    const newActivity = await prisma.p1Activity.create({
+    const count = await prisma.stageActivity.count();
+    const newActivity = await prisma.stageActivity.create({
       data: {
         name,
         order: count,
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(newActivity, { status: 201 });
   } catch (error) {
-    console.error("Falha ao criar atividade P1:", error);
+    console.error("Falha ao criar atividade de Stage:", error);
     return NextResponse.json({ error: "Não foi possível criar a atividade." }, { status: 500 });
   }
 }
@@ -37,17 +37,17 @@ export async function PATCH(req: Request) {
 
     await prisma.$transaction(async (tx) => {
       for (const { id, order: idx } of order) {
-        await tx.p1Activity.update({ where: { id }, data: { order: idx } });
+        await tx.stageActivity.update({ where: { id }, data: { order: idx } });
       }
 
       if (deleteIds && deleteIds.length > 0) {
-        await tx.p1Activity.deleteMany({ where: { id: { in: deleteIds } } });
+        await tx.stageActivity.deleteMany({ where: { id: { in: deleteIds } } });
       }
     });
 
-    return NextResponse.json({ message: "Checklist P1 atualizado com sucesso." });
+    return NextResponse.json({ message: "Checklist de Stage atualizado com sucesso." });
   } catch (error) {
-    console.error("Falha ao atualizar atividades P1:", error);
+    console.error("Falha ao atualizar atividades de Stage:", error);
     return NextResponse.json({ error: "Não foi possível salvar as alterações." }, { status: 500 });
   }
 }

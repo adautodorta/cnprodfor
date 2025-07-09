@@ -81,7 +81,7 @@ model Verification {
 }
 
 model P1Activity {
-  id String @id
+  id String @id @default(cuid())
   name String
   order Int
 
@@ -89,7 +89,7 @@ model P1Activity {
 }
 
 model StageActivity {
-  id String @id
+  id String @id @default(cuid())
   name String
   order Int
 

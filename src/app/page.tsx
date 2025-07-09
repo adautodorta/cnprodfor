@@ -27,7 +27,18 @@ export default function Home() {
   const [date, setDate] = useState<Date | undefined>(new Date())
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const router = useRouter();
+  const [p1Activities, setP1Activities] = useState<{ id: string; name: string }[]>([]);
+  const [stageActivities, setStageActivities] = useState<{ id: string; name: string }[]>([]);
+
+  useEffect(() => {
+    fetch("/api/p1-activities")
+      .then(res => res.json())
+      .then(setP1Activities);
   
+    fetch("/api/stage-activities")
+      .then(res => res.json())
+      .then(setStageActivities);
+  }, []);
 
   const [formData, setFormData] = useState({
     oferta: '',
@@ -174,6 +185,7 @@ export default function Home() {
               </Link>
             </AccordionContent>
           </AccordionItem>
+          
           <AccordionItem value="item-2">
             <AccordionTrigger>Tarefas P1</AccordionTrigger>
             <AccordionContent key={`p1-${resetKey}`}>
@@ -186,177 +198,26 @@ export default function Home() {
                   <Trash2 size={16} />
                   Limpar checklist
                 </Button>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="p1-task-1"
-                    checked={checkedTasks['p1-task-1']}
-                    onCheckedChange={(checked) => handleCheckChange('p1-task-1', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="p1-task-1"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Quando culto das 08h, organizar mesa do café (montagem da mesa).
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="p1-task-2"
-                    checked={checkedTasks['p1-task-2']}
-                    onCheckedChange={(checked) => handleCheckChange('p1-task-2', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="p1-task-2"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Preparar jarra de água com copos + taça e água do pregador.
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="p1-task-3"
-                    checked={checkedTasks['p1-task-3']}
-                    onCheckedChange={(checked) => handleCheckChange('p1-task-3', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="p1-task-3"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Perguntar para o líder da banda a quantidade de pessoas para ajuda de custo e depois passar para o lider da diaconia, antes da palavra de oferta.
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="p1-task-4"
-                    checked={checkedTasks['p1-task-4']}
-                    onCheckedChange={(checked) => handleCheckChange('p1-task-4', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="p1-task-4"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Quando 2º domingo do mês, pegar castanha e mel.
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="p1-task-5"
-                    checked={checkedTasks['p1-task-5']}
-                    onCheckedChange={(checked) => handleCheckChange('p1-task-5', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="p1-task-5"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Descobrir quem irá dar a palavra de oferta.
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="p1-task-6"
-                    checked={checkedTasks['p1-task-6']}
-                    onCheckedChange={(checked) => handleCheckChange('p1-task-6', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="p1-task-6"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Pegar o máximo de informações sobre a palavra e pregador do culto. 
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="p1-task-7"
-                    checked={checkedTasks['p1-task-7']}
-                    onCheckedChange={(checked) => handleCheckChange('p1-task-7', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="p1-task-7"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Preencher formulário de culto e enviar nos grupos do whatsapp (Produção Geral e Produção & Técnica).
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="p1-task-8"
-                    checked={checkedTasks['p1-task-8']}
-                    onCheckedChange={(checked) => handleCheckChange('p1-task-8', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="p1-task-8"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Quando culto de santa-ceia, pegar a santa ceia para produção, pregador e banda (todo culto das 15hs tem santa ceia).
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="p1-task-9"
-                    checked={checkedTasks['p1-task-9']}
-                    onCheckedChange={(checked) => handleCheckChange('p1-task-9', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="p1-task-9"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Quando culto de santa-ceia, já deixar a ceia do pregador um pouco aberta para facilitar a abertura.
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="p1-task-10"
-                    checked={checkedTasks['p1-task-10']}
-                    onCheckedChange={(checked) => handleCheckChange('p1-task-10', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="p1-task-10"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Se houver apresentação de crianças, reservar as cadeiras e recepcionar os pais.
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="p1-task-11"
-                    checked={checkedTasks['p1-task-11']}
-                    onCheckedChange={(checked) => handleCheckChange('p1-task-11', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="p1-task-11"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Quando culto das 08h, remover mesa do café da manhã.
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="p1-task-12"
-                    checked={checkedTasks['p1-task-12']}
-                    onCheckedChange={(checked) => handleCheckChange('p1-task-12', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="p1-task-12"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Retirar os copos e jarra da mesa de apoio e conferir se está tudo organizado.
-                  </label>
-                </div>
+                {p1Activities.map((activity, idx) => (
+                  <div className="flex items-start space-x-2" key={activity.id}>
+                    <Checkbox
+                      id={`p1-task-${activity.id}`}
+                      checked={checkedTasks[`p1-task-${activity.id}`]}
+                      onCheckedChange={(checked) => handleCheckChange(`p1-task-${activity.id}`, checked as boolean)}
+                      className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
+                    />
+                    <label
+                      htmlFor={`p1-task-${activity.id}`}
+                      className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      {activity.name}
+                    </label>
+                  </div>
+                ))}
               </div>
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="item-3">
             <AccordionTrigger>Tarefas Stage</AccordionTrigger>
             <AccordionContent key={`stage-${resetKey}`}>
@@ -369,272 +230,22 @@ export default function Home() {
                   <Trash2 size={16} />
                   Limpar checklist
                 </Button>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="stage-task-1"
-                    checked={checkedTasks['stage-task-1']}
-                    onCheckedChange={(checked) => handleCheckChange('stage-task-1', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="stage-task-1"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Alinhar com P1 sobre checagem de detalhes e informações do culto.
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="stage-task-2"
-                    checked={checkedTasks['stage-task-2']}
-                    onCheckedChange={(checked) => handleCheckChange('stage-task-2', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="stage-task-2"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Vistoriar backstage e palco.
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="stage-task-3"
-                    checked={checkedTasks['stage-task-3']}
-                    onCheckedChange={(checked) => handleCheckChange('stage-task-3', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="stage-task-3"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Ligar ar condicionado do backstage.
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="stage-task-4"
-                    checked={checkedTasks['stage-task-4']}
-                    onCheckedChange={(checked) => handleCheckChange('stage-task-4', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="stage-task-4"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Checar elementos técnicos (microfones, pilhas, etc...).
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="stage-task-5"
-                    checked={checkedTasks['stage-task-5']}
-                    onCheckedChange={(checked) => handleCheckChange('stage-task-5', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="stage-task-5"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Pegar o fone/rádio.
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="stage-task-6"
-                    checked={checkedTasks['stage-task-6']}
-                    onCheckedChange={(checked) => handleCheckChange('stage-task-6', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="stage-task-6"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Se apresentar a equipe do louvor e perguntar se precisa de alguma ajuda.
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="stage-task-7"
-                    checked={checkedTasks['stage-task-7']}
-                    onCheckedChange={(checked) => handleCheckChange('stage-task-7', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="stage-task-7"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Se apresentar a House e se colocar à disposição para contribuir com eles.
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="stage-task-8"
-                    checked={checkedTasks['stage-task-8']}
-                    onCheckedChange={(checked) => handleCheckChange('stage-task-8', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="stage-task-8"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Limpar as mesinhas e deixar no ponto de uso.
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="stage-task-9"
-                    checked={checkedTasks['stage-task-9']}
-                    onCheckedChange={(checked) => handleCheckChange('stage-task-9', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="stage-task-9"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Acompanhar o setlist e Posicionar o pastor/orador/ para este momento de oferta e comunicar a house quem vai entrar e com qual microfone quando estiver faltando 1 minutos para entrar.
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="stage-task-10"
-                    checked={checkedTasks['stage-task-10']}
-                    onCheckedChange={(checked) => handleCheckChange('stage-task-10', checked as boolean)}
-                    className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <label
-                    htmlFor="stage-task-10"
-                    className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Entrar com as mesas e água no 3º vídeo do CN news.
-                  </label>
-                </div>
-                  <div className="flex items-start space-x-2">
+                {stageActivities.map((activity) => (
+                  <div className="flex items-start space-x-2" key={activity.id}>
                     <Checkbox
-                      id="stage-task-11"
-                      checked={checkedTasks['stage-task-11']}
-                      onCheckedChange={(checked) => handleCheckChange('stage-task-11', checked as boolean)}
+                      id={`stage-task-${activity.id}`}
+                      checked={checkedTasks[`stage-task-${activity.id}`]}
+                      onCheckedChange={(checked) => handleCheckChange(`stage-task-${activity.id}`, checked as boolean)}
                       className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                     />
                     <label
-                      htmlFor="stage-task-11"
+                      htmlFor={`stage-task-${activity.id}`}
                       className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
-                      Conferir se instrumentos ou tripés estão na frente do telão e retirar caso estejam.
+                      {activity.name}
                     </label>
                   </div>
-                  <div className="flex items-start space-x-2">
-                    <Checkbox
-                      id="stage-task-12"
-                      checked={checkedTasks['stage-task-12']}
-                      onCheckedChange={(checked) => handleCheckChange('stage-task-12', checked as boolean)}
-                      className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                    />
-                    <label
-                      htmlFor="stage-task-12"
-                      className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Receber, preparar pastor e entregar microfone para próximo momento.
-                    </label>
-                  </div>
-                  <div className="flex items-start space-x-2">
-                    <Checkbox
-                      id="stage-task-13"
-                      checked={checkedTasks['stage-task-13']}
-                      onCheckedChange={(checked) => handleCheckChange('stage-task-13', checked as boolean)}
-                      className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                    />
-                    <label
-                      htmlFor="stage-task-13"
-                      className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Faltando 5 min para o final da palavra - Localizar o tecladista e fazê-lo subir ao backstage.
-                    </label>
-                  </div>
-                  <div className="flex items-start space-x-2">
-                    <Checkbox
-                      id="stage-task-14"
-                      checked={checkedTasks['stage-task-14']}
-                      onCheckedChange={(checked) => handleCheckChange('stage-task-14', checked as boolean)}
-                      className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                    />
-                    <label
-                      htmlFor="stage-task-14"
-                      className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Faltando 3 min para o final da palavra - deixar banda posicionada para entrada de todos (avisar a house para a entrada).
-                    </label>
-                  </div>
-                  <div className="flex items-start space-x-2">
-                    <Checkbox
-                      id="stage-task-15"
-                      checked={checkedTasks['stage-task-15']}
-                      onCheckedChange={(checked) => handleCheckChange('stage-task-15', checked as boolean)}
-                      className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                    />
-                    <label
-                      htmlFor="stage-task-15"
-                      className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Garantir que todos os microfones estejam desligados e guardados.
-                    </label>
-                  </div>
-                  <div className="flex items-start space-x-2">
-                    <Checkbox
-                      id="stage-task-16"
-                      checked={checkedTasks['stage-task-16']}
-                      onCheckedChange={(checked) => handleCheckChange('stage-task-16', checked as boolean)}
-                      className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                    />
-                    <label
-                      htmlFor="stage-task-16"
-                      className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Retirar as mesas.
-                    </label>
-                  </div>
-                  <div className="flex items-start space-x-2">
-                    <Checkbox
-                      id="stage-task-17"
-                      checked={checkedTasks['stage-task-17']}
-                      onCheckedChange={(checked) => handleCheckChange('stage-task-17', checked as boolean)}
-                      className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                    />
-                    <label
-                      htmlFor="stage-task-17"
-                      className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Conferir pilhas e baterias e informar a equipe do próximo culto.
-                    </label>
-                  </div>
-                  <div className="flex items-start space-x-2">
-                    <Checkbox
-                      id="stage-task-18"
-                      checked={checkedTasks['stage-task-18']}
-                      onCheckedChange={(checked) => handleCheckChange('stage-task-18', checked as boolean)}
-                      className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                    />
-                    <label
-                      htmlFor="stage-task-18"
-                      className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Garantir que a produção permaneça por pelo menos 10 minutos após o fim do culto, controlando e observando o fluxo de saída e a chegada da próxima equipe.
-                    </label>
-                  </div>
-                  <div className="flex items-start space-x-2">
-                    <Checkbox
-                      id="stage-task-19"
-                      checked={checkedTasks['stage-task-19']}
-                      onCheckedChange={(checked) => handleCheckChange('stage-task-19', checked as boolean)}
-                      className="mt-[3px] data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                    />
-                    <label
-                      htmlFor="stage-task-19"
-                      className="text-sm font-medium leading-[19px] peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Devolver ou entregar em mãos a próxima equipe o Rádio/Phone desligado.
-                    </label>
-                  </div>
+                ))}
               </div>
             </AccordionContent>
           </AccordionItem>
